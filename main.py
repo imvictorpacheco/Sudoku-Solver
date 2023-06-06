@@ -1,4 +1,5 @@
 from functions import *
 
 open_sudoku()
-#pyautogui.screenshot("sudoku_matrix.png", region = (100,0,300,300))
+base_matrix = get_matrix()
+print_matrix(base_matrix)
