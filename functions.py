@@ -57,6 +57,7 @@ def print_matrix(matrix):
 def solve_matrix(matrix, draft):
 	for r in range(9):
 		for c in range(9):
+			i = coord_to_index(r, c)
 			draft = update_draft(matrix, draft)
 			if type(draft[r][c]) == int:
 				matrix[r][c] = draft[r][c]
@@ -80,7 +81,10 @@ def update_draft(matrix, draft):
 	return draft
 
 
-def last_free_cell(matrix):
+def last_free_cell(matrix, i):
+	row  = get_rcq(matrix, i, 'r')
+	col  = get_rcq(matrix, i, 'c')
+	quad = get_rcq(matrix, i, 'q')
 	return matrix
 
 
@@ -111,6 +115,9 @@ def index_to_coord(index):
 	col = index % 9
 	row = int(index / 9)
 	return row, col
+
+def coord_to_index(r, c):
+	return r * 9 + c
 
 def merge_lists(list1, list2, list3):
 	merged_list = []
