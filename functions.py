@@ -55,11 +55,9 @@ def print_matrix(matrix):
 # Second Part -> Solve
 
 def solve_matrix(matrix, draft):
-	print("Antes do apdate", draft[8][8])
-	draft = update_draft(matrix, draft)
-	print("Depois do apdate", draft[8][8])
 	for r in range(9):
 		for c in range(9):
+			draft = update_draft(matrix, draft)
 			if type(draft[r][c]) == int:
 				matrix[r][c] = draft[r][c]
 	return matrix
@@ -74,20 +72,15 @@ def update_draft(matrix, draft):
 		col  = get_rcq(matrix, i, 'c')
 		quad = get_rcq(matrix, i, 'q')
 		n_l = merge_lists(row, col, quad)
-		print(f"r, c = {r},{c}")
-		print(f"row = {row}")
-		print(f"col = {col}")
-		print(f"quad = {quad}")
 		if type(draft[r][c]) == list:
 			draft[r][c] = subtract_lists(list(draft[r][c]), n_l)
 		if type(draft[r][c]) == list and len(draft[r][c]) == 1:
 				draft[r][c] = draft[r][c][0]
-				print(draft[r][c])
+	print('\n', draft[0], '\n')
 	return draft
 
 
 def last_free_cell(matrix):
-
 	return matrix
 
 
