@@ -62,27 +62,27 @@ def solve_matrix(matrix, draft):
 		for c in range(9):
 			if type(draft[r][c]) == int:
 				matrix[r][c] = draft[r][c]
-	print("Depois do for", draft[8][8])
 	return matrix
 
 	# Sub-functions for solving
 def update_draft(matrix, draft):
 	for i in range(81):
 		r, c = index_to_coord(i)
-		# print(i, f"r = {r}, c = {c}")
 		if matrix[r][c] != 0 and type(draft[r][c]) == list:
 			draft[r][c] = matrix[r][c]
 		row  = get_rcq(matrix, i, 'r')
 		col  = get_rcq(matrix, i, 'c')
 		quad = get_rcq(matrix, i, 'q')
 		n_l = merge_lists(row, col, quad)
-		for n in n_l:
-			if type(n) == int and type(draft[r][c]) == list:
-				if n in draft[r][c]:
-					draft[r][c] = draft[r][c].remove(n)
+		print(f"r, c = {r},{c}")
+		print(f"row = {row}")
+		print(f"col = {col}")
+		print(f"quad = {quad}")
 		if type(draft[r][c]) == list:
-			if len(draft[r][c]) == 1:
+			draft[r][c] = subtract_lists(list(draft[r][c]), n_l)
+		if type(draft[r][c]) == list and len(draft[r][c]) == 1:
 				draft[r][c] = draft[r][c][0]
+				print(draft[r][c])
 	return draft
 
 
@@ -92,7 +92,6 @@ def last_free_cell(matrix):
 
 
 def get_rcq(matrix, index, c):
-	# print(f"index = {index}, c = {c}")
 	ans = []
 	row, col = index_to_coord(index)
 	if c == 'c':
@@ -108,8 +107,8 @@ def get_rcq(matrix, index, c):
 	return ans
 
 def index_to_quad(index):
-	col, row = index_to_coord(index)
-	quad = col % 3 + row % 3 * 3
+	row, col = index_to_coord(index)
+	quad = int(row / 3) * 3 + int(col / 3)
 	return quad
 
 def quad_to_index(quad):
@@ -133,20 +132,8 @@ def merge_lists(list1, list2, list3):
 			merged_list.append(num)
 	return merged_list
 
-# ex = [
-# [1, 0, 0, 0, 4, 0, 0, 2, 0],
-# [2, 0, 3, 6, 0, 8, 1, 0, 0],
-# [0, 0, 0, 0, 9, 1, 0, 8, 6],
-# [7, 8, 0, 5, 6, 0, 0, 9, 2],
-# [0, 0, 0, 0, 0, 0, 0, 0, 0],
-# [0, 2, 4, 0, 0, 9, 5, 0, 1],
-# [6, 0, 0, 0, 7, 5, 0, 0, 4],
-# [0, 0, 0, 1, 0, 0, 0, 7, 0],
-# [8, 1, 0, 0, 2, 0, 6, 5, 3]
-# ]
-
-# print_matrix(ex)
-# print("---------------")
-# print(get_rcq(ex, 1, 'q'))
-# print(get_rcq(ex, 1, 'c'))
-# print(get_rcq(ex, 1, 'r'))
+def subtract_lists(main_list, sub_list):
+	for i in sub_list:
+		if i in main_list:
+			main_list.remove(i)
+	return main_list
