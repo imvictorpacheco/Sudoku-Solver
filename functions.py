@@ -7,6 +7,7 @@ import cv2
 from PIL import Image
 import pytesseract
 import AppOpener
+from time import *
 
 # First Part -> Get the base matrix
 
@@ -55,12 +56,12 @@ def print_matrix(matrix):
 # Second Part -> Solve
 
 def solve_matrix(matrix, draft):
-	for r in range(9):
-		for c in range(9):
-			i = coord_to_index(r, c)
-			draft = update_draft(matrix, draft)
-			if type(draft[r][c]) == int:
-				matrix[r][c] = draft[r][c]
+	t0 = time()
+	while True and time() - t0 < 10: # Se o jogo não estiver acabado e 
+		draft = update_draft(matrix, draft)
+		matrix = update_matrix(matrix, draft)
+		# matrix = last_free_cell(matrix)
+		print("-------------")
 	return matrix
 
 	# Sub-functions for solving
@@ -77,14 +78,27 @@ def update_draft(matrix, draft):
 			draft[r][c] = subtract_lists(list(draft[r][c]), n_l)
 		if type(draft[r][c]) == list and len(draft[r][c]) == 1:
 				draft[r][c] = draft[r][c][0]
-	print('\n', draft[0], '\n')
+	# print('\n', draft[0], '\n')
 	return draft
 
+def update_matrix(matrix, draft):
+	for i in range(81):
+		r, c = index_to_coord(i)
+		if type(draft[r][c]) == int and matrix[r][c] == 0:
+			matrix[r][c] = draft[r][c]
+	return matrix
 
-def last_free_cell(matrix, i):
-	row  = get_rcq(matrix, i, 'r')
-	col  = get_rcq(matrix, i, 'c')
-	quad = get_rcq(matrix, i, 'q')
+def last_free_cell(matrix):
+	for i in range(81):
+		r, c = index_to_coord(i)
+		row  = get_rcq(matrix, i, 'r')
+		col  = get_rcq(matrix, i, 'c')
+		quad = get_rcq(matrix, i, 'q')
+		if row.count(0) == 1 or col.count(0) == 1 or quad.count(0) == 1:
+			rcq = merge_lists(row, col, quad)
+			n = subtract_lists([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], rcq)[0]
+			print(rcq)
+			matrix[r][c] = n
 	return matrix
 
 
