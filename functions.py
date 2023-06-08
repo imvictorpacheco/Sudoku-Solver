@@ -8,12 +8,20 @@ from PIL import Image
 import pytesseract
 import AppOpener
 from time import *
+import inquirer
 
 # First Part -> Get the base matrix
 
 def open_sudoku():
+	options = ['Easy', 'Medium', 'Hard', 'Expert']
+	questions = [inquirer.List('Análise', message = 'Escolha a análise desejada: ', choices = options)]
+	answers = inquirer.prompt(questions)
+	analise = answers['Análise']
 	AppOpener.open("SUDOKU CLASSIC!")
-	sleep(1)
+	sleep(0.5)
+	pyautogui.click(1820, 990)
+	sleep(0.5)
+	pyautogui.click(int(1920/2), 450 + options.index(analise)*65)
 
 def get_main_matrix():
 	tile_size = 99
