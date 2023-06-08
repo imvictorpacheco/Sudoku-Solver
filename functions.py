@@ -19,9 +19,10 @@ def open_sudoku():
 	analise = answers['Análise']
 	AppOpener.open("SUDOKU CLASSIC!")
 	sleep(0.5)
-	pyautogui.click(1820, 990)
+	pyautogui.click(1740, 990)
 	sleep(0.5)
 	pyautogui.click(int(1920/2), 450 + options.index(analise)*65)
+	sleep(0.5)
 
 def get_main_matrix():
 	tile_size = 99
