@@ -69,14 +69,14 @@ def print_matrix(matrix):
 def solve_matrix(matrix, draft):
 	t0 = time()
 	while True and time() - t0 < 10: # Se o jogo não estiver acabado e 
-		draft = update_draft(matrix, draft)
+		draft = last_possible_number(matrix, draft)
 		matrix = update_matrix(matrix, draft)
 		matrix = last_free_cell(matrix)
 	return matrix
 
 	# Sub-functions for solving
 
-def update_draft(matrix, draft):
+def last_possible_number(matrix, draft):
 	for i in range(81):
 		r, c = index_to_coord(i)
 		if matrix[r][c] != 0 and type(draft[r][c]) == list:
