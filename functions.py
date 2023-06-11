@@ -62,16 +62,26 @@ def screenshot_matrix():
 def print_matrix(matrix):
 	for l in matrix:
 		for i in l:
-			print(f"{i} ", end = "")
+			if i != 0:
+				print(f"{i} ", end = "")
+			else:
+				print("  ", end = "")
 		print()
+
+def solved(matrix):
+	for line in matrix:
+		if 0 in line:
+			return True
+	return False
 # Second Part -> Solve
 
 def solve_matrix(matrix, draft):
 	t0 = time()
-	while True and time() - t0 < 10: # Se o jogo não estiver acabado e 
+	while solved(matrix) and time() - t0 < 20: # Se o jogo não estiver acabado e 
 		draft = last_possible_number(matrix, draft)
 		matrix = update_matrix(matrix, draft)
 		matrix = last_free_cell(matrix)
+	print(f"tempo de cálculo = {time()-t0} segundos")
 	return matrix
 
 	# Sub-functions for solving
