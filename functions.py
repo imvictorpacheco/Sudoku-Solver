@@ -61,7 +61,9 @@ def screenshot_matrix():
 
 def print_matrix(matrix):
 	for l in matrix:
-		print(l)
+		for i in l:
+			print(f"{i} ", end = "")
+		print()
 # Second Part -> Solve
 
 def solve_matrix(matrix, draft):
@@ -70,10 +72,10 @@ def solve_matrix(matrix, draft):
 		draft = update_draft(matrix, draft)
 		matrix = update_matrix(matrix, draft)
 		# matrix = last_free_cell(matrix)
-		print("-------------")
 	return matrix
 
 	# Sub-functions for solving
+
 def update_draft(matrix, draft):
 	for i in range(81):
 		r, c = index_to_coord(i)
@@ -87,7 +89,6 @@ def update_draft(matrix, draft):
 			draft[r][c] = subtract_lists(list(draft[r][c]), n_l)
 		if type(draft[r][c]) == list and len(draft[r][c]) == 1:
 				draft[r][c] = draft[r][c][0]
-	# print('\n', draft[0], '\n')
 	return draft
 
 def update_matrix(matrix, draft):
@@ -105,11 +106,10 @@ def last_free_cell(matrix):
 		quad = get_rcq(matrix, i, 'q')
 		if row.count(0) == 1 or col.count(0) == 1 or quad.count(0) == 1:
 			rcq = merge_lists(row, col, quad)
-			n = subtract_lists([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], rcq)[0]
-			print(rcq)
-			matrix[r][c] = n
+			n = subtract_lists([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], rcq)
+			if n != [] and len(n) == 1:
+				matrix[r][c] = n[0]
 	return matrix
-
 
 def get_rcq(matrix, index, c):
 	ans = []
