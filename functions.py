@@ -71,7 +71,7 @@ def solve_matrix(matrix, draft):
 	while True and time() - t0 < 10: # Se o jogo não estiver acabado e 
 		draft = update_draft(matrix, draft)
 		matrix = update_matrix(matrix, draft)
-		# matrix = last_free_cell(matrix)
+		matrix = last_free_cell(matrix)
 	return matrix
 
 	# Sub-functions for solving
@@ -104,7 +104,7 @@ def last_free_cell(matrix):
 		row  = get_rcq(matrix, i, 'r')
 		col  = get_rcq(matrix, i, 'c')
 		quad = get_rcq(matrix, i, 'q')
-		if row.count(0) == 1 or col.count(0) == 1 or quad.count(0) == 1:
+		if (row.count(0) == 1 or col.count(0) == 1 or quad.count(0) == 1) and matrix[r][c] == 0:
 			rcq = merge_lists(row, col, quad)
 			n = subtract_lists([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], rcq)
 			if n != [] and len(n) == 1:
